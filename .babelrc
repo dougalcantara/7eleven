@@ -1,0 +1,18 @@
+{
+  "env": {
+    "production": {
+      "presets": [
+        ["@babel/preset-env",
+          {
+            "modules": false
+          }
+        ]
+      ]
+    },
+    "development": {
+      "presets": [
+        ["@babel/preset-env"]
+      ]
+    }
+  }
+}
