@@ -1,13 +1,13 @@
 {
   "name": "7eleven",
   "version": "0.1.0",
-  "description": "A State Management Library",
+  "description": "A Convenient Store",
   "main": "dist/main.js",
   "scripts": {
     "lint": "eslint src/**",
-    "test:dev": "NODE_ENV=development npm run lint && nyc mocha --require @babel/register",
-    "test:prod": "NODE_ENV=production npm run build && nyc mocha",
-    "build": "rollup --config"
+    "test:dev": "export NODE_ENV=development && npm run lint && nyc mocha --require @babel/register",
+    "test:prod": "export NODE_ENV=production && nyc mocha",
+    "build": "export NODE_ENV=production && npm run lint && rollup --config && npm run test:prod"
   },
   "keywords": [
     "state-management",
