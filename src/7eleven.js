@@ -38,12 +38,13 @@ export function Schema(props, lockProps = true) {
     this[propsKeys[i]] = lockProps ? Object.freeze(props[propsKeys[i]]) : props[propsKeys[i]];
   }
 
+  this._isStoreMember = true;
+
   return this;
 }
 
 export function Action(type, schema) {
-  if ((typeof (type) !== 'string')) return console.error('New Actions must be initialized with a String as the first argument.');
-  if ((typeof (schema) !== 'object')) return console.error('New Actions must be initialized with an Object or Array as the second argument.');
+  if (!schema._isStoreMember) return console.error('New Actions must be initialized with a Schema Object as the second argument.');
 
   this.type = type;
   this.schema = schema;
