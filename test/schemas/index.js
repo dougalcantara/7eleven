@@ -7,15 +7,20 @@ const User = new Schema('User', {
   lastLogin: 0,
 });
 
-const BlogPosts = new Schema('BlogPosts', {
+const BlogPost = new Schema('BlogPost', {
   id: 0,
   title: '',
   postBody: '',
 });
 
+const AllBlogPosts = new Schema('AllBlogPosts', {
+  posts: [BlogPost],
+})
+
 const schemas = {
   User,
-  BlogPosts,
+  BlogPost,
+  AllBlogPosts,
 };
 
 module.exports = { schemas };

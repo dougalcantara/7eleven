@@ -2,19 +2,27 @@
   "name": "7eleven",
   "version": "0.1.0",
   "description": "A Convenient Store",
-  "main": "dist/main.js",
+  "main": "dist/7eleven.js",
   "scripts": {
     "lint": "eslint src/**",
     "test:dev": "export NODE_ENV=development && npm run lint && nyc mocha --require @babel/register",
     "test:prod": "export NODE_ENV=production && nyc mocha",
     "build": "export NODE_ENV=production && npm run lint && rollup --config && npm run test:prod"
   },
+  "bugs": {
+    "url": "https://github.com/dougalcantara/7eleven/issues"
+  },
+  "homepage": "https://github.com/dougalcantara/7eleven#readme",
   "keywords": [
     "state-management",
     "javascript",
     "state",
     "state-machine"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dougalcantara/7eleven"
+  },
   "author": "Doug Alcantara",
   "license": "MIT",
   "devDependencies": {

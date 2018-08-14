@@ -1,20 +1,19 @@
+import { _deriveStorePropertiesFromActions } from './helpers';
+
 export function Store(actions = {}) {
   this.actions = actions;
   this.schemas = {};
   this.mutations = {};
+  this.state = {};
 
-  const actionKeys = Object.keys(this.actions);
-
-  for (let i = 0, n = actionKeys.length; i < n; i++) {
-    this.schemas[this.actions[actionKeys[i]].schemaName] = this.actions[actionKeys[i]].schema;
-  }
+  _deriveStorePropertiesFromActions.call(this);
 
   return this;
 }
 
 export function Schema(name, props, lockProps = true) {
   if ((typeof (props) !== 'object') || props.length) {
-    return console.error('New Schemas must be initialized with an Object literal as the first argument.');
+    return console.error('New Schemas must be initialized with an Object literal as the second argument.');
   }
 
   const propsKeys = Object.keys(props);
@@ -24,7 +23,12 @@ export function Schema(name, props, lockProps = true) {
   }
 
   this.name = name;
-  this._isStoreMember = true;
+
+  Object.defineProperty(this, '_isStoreMember', {
+    enumerable: false,
+    writable: false,
+    value: true,
+  });
 
   return this;
 }
@@ -35,10 +39,20 @@ export function Action(type, schema) {
   this.type = type;
   this.schemaName = schema.name;
 
-  // eslint-disable-next-line no-param-reassign
+  /* eslint no-param-reassign: ["error", { "props": false }] */
   delete schema.name;
 
   this.schema = schema;
 
   return this;
 }
+
+Action.prototype.forState = function (_forState = true) {
+  Object.defineProperty(this, '_forState', {
+    writable: false,
+    enumerable: false,
+    value: _forState,
+  });
+
+  return this;
+};
