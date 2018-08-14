@@ -2,6 +2,7 @@
   "extends": "airbnb",
   "rules": {
     "func-names": 0,
-    "import/prefer-default-export": 0
+    "import/prefer-default-export": 0,
+    "no-plusplus": 0
   }
 }
