@@ -12,9 +12,7 @@ export default {
     include: 'src/**',
   },
   plugins: [
-    babel({
-      exclude: 'node_modules/**',
-    }),
-    // minify(),
+    babel({ exclude: 'node_modules/**' }),
+    minify({ comments: false }),
   ],
 }

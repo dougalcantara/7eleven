@@ -1,52 +1,58 @@
-export function Store(initialState = {}) {
-  this.state = initialState;
-  this.schemas = {};
-  this.actions = {};
-  this.mutations = {};
-}
-
 // eslint-disable-next-line no-underscore-dangle
 function _updateStoreProperty(propertyName, obj) {
-  // Use this instead of a for..in loop. For..in iterates over the entire prototype chain == bad.
-  const propertyKeys = Object.keys(obj);
+  const keys = Object.keys(obj);
 
-  for (let i = 0, n = propertyKeys.length; i < n; i++) {
+  for (let i = 0, n = keys.length; i < n; i++) {
     this[propertyName] = {
       ...this[propertyName],
-      [propertyKeys[i].type]: propertyKeys[i],
+      [keys[i]]: obj[keys[i]],
     };
-
-    console.log(this[propertyName]);
-
-    // delete this[property][propertyKeys[i].type].type;
   }
 }
 
-export function Schema(props, lockSize = true) {
-  if ((typeof (props) !== 'object')) {
-    return console.error('New Schemas must be initialized with an Object literal as the first argument.');
-  }
+// Store.schemas are derived from the actions passed to the Store constructor
+export function Store(actions = {}) {
+  this.schemas = {};
+  this.actions = actions;
+  this.mutations = {};
 
-  this.props = lockSize ? Object.freeze(props) : props;
+  const actionKeys = Object.keys(this.actions);
+
+  for (let i = 0, n = actionKeys.length; i < n; i++) {
+    this.schemas[actionKeys[i]] = {
+      [actionKeys[i]]: this.actions[actionKeys[i]].schema,
+    };
+  }
 
   return this;
 }
 
-Store.prototype.registerSchemas = function (schemas) {
-  const schemasKeys = Object.keys(schemas);
-
-  for (let i = 0, n = schemasKeys.length; i < n; i++) {
-    this.schemas = {
-      ...this.schemas,
-      [schemasKeys[i]]: schemas[schemasKeys[i]],
-    };
+export function Schema(props, lockProps = true) {
+  if ((typeof (props) !== 'object') || props.length) {
+    return console.error('New Schemas must be initialized with an Object literal as the first argument.');
   }
 
-  return this.schemas;
-};
+  const propsKeys = Object.keys(props);
+
+  for (let i = 0, n = propsKeys.length; i < n; i++) {
+    this[propsKeys[i]] = lockProps ? Object.freeze(props[propsKeys[i]]) : props[propsKeys[i]];
+  }
+
+  return this;
+}
+
+export function Action(type, schema) {
+  if ((typeof (type) !== 'string')) return console.error('New Actions must be initialized with a String as the first argument.');
+  if ((typeof (schema) !== 'object')) return console.error('New Actions must be initialized with an Object or Array as the second argument.');
+
+  this.type = type;
+  this.schema = schema;
+
+  return this;
+}
 
 Store.prototype.registerActions = function (actions) {
   _updateStoreProperty.call(this, 'actions', actions);
 
-  return this.actions;
+  return this;
 };
