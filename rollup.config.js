@@ -13,6 +13,6 @@ export default {
   },
   plugins: [
     babel({ exclude: 'node_modules/**' }),
-    minify({ comments: false }),
+    // minify({ comments: false }),
   ],
 }

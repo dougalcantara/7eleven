@@ -4,6 +4,7 @@
   "description": "A Convenient Store",
   "main": "dist/7eleven.js",
   "scripts": {
+    "docgen": "jsdoc src/*.js",
     "lint": "eslint src/**",
     "test:dev": "export NODE_ENV=development && npm run lint && nyc mocha --require @babel/register",
     "test:prod": "export NODE_ENV=production && nyc mocha",
@@ -35,6 +36,7 @@
     "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.10.0",
+    "jsdoc": "^3.5.5",
     "mocha": "^5.2.0",
     "nyc": "^12.0.2",
     "rollup": "^0.64.1",

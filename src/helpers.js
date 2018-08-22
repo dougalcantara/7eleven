@@ -1,3 +1,9 @@
+/**
+ * Iterates over the actions passed to the Store constructor and builds the Store.schemas and Store.state objects automagically
+ * @private
+ * @this Store
+ * @returns {boolean}
+ */
 export function _deriveStorePropertiesFromActions() {
   const actionKeys = Object.keys(this.actions);
 
@@ -11,4 +17,6 @@ export function _deriveStorePropertiesFromActions() {
 
     this.schemas[thisSchemaName] = thisSchema;
   }
+
+  return true;
 }
